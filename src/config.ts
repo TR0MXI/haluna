@@ -17,7 +17,7 @@ export const Config: Schema<Config> = Schema.object({
                 .description('Ha AuthToken'),
         ping: Schema.number()
                 .default(5)
-                .description('Ping 间隔'),
+                .description('Ping 间隔(s)'),
         timeout: Schema.number()
                 .default(5)
                 .description('超时时间(s)'),

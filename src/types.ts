@@ -40,7 +40,10 @@ export interface CallServiceMessage extends CommandMessage {
 }
 
 export interface CallServiceYaml extends CallServiceMessage {
-        command: string
+        command: {
+                name: string
+                level?: number
+        }
         id: number
         type: string
         domain: string
@@ -53,5 +56,5 @@ export interface CallServiceYaml extends CallServiceMessage {
         responsepath?: {
                 type: string
                 path: string
-        }
+        }[]
 }

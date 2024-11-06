@@ -1,4 +1,4 @@
-import { Context } from "koishi"
+import { Context, Fragment } from "koishi"
 import {} from '@koishijs/plugin-help'
 import { CallServiceYaml } from "./types"
 import { HaWsClinet } from "./ws_client"
@@ -85,8 +85,11 @@ export function CreateCallServiceCommand(
         HaWsClinet: HaWsClinet
 ) {
         const { command, domain, service, service_data, target, return_response, responsepath } = CallServiceYaml
+        let { name, level } = command
 
-        ctx.command( `${command}`, { hidden: true, authority: 3 })
+        if (!level) level = 3
+
+        ctx.command( `${name}`, { hidden: true, authority: 3 })
                 .action(({session}, ...args) => {
                         if (responsepath) {
                                 let isOk: boolean = false
@@ -94,13 +97,22 @@ export function CreateCallServiceCommand(
                                         ctx.setTimeout(() => {
                                                 dispose()
                                                 if (isOk) return
-                                                HaWsClinet.HaLogger('error ', command, ' Timeout')
+                                                HaWsClinet.HaLogger('error ', name, ' Timeout')
                                                 session.send('Timeout')
                                         }, HaWsClinet.GetTimeOut() * 1000)
 
-                                        if (data.type !== responsepath.type) return
+                                        let response: any = null
+                                        
+                                        responsepath.some(responsepath => {
+                                                if (data.type !== responsepath.type) return false
 
-                                        const response = searchObjectByPath(data, responsepath.path)
+                                                const re = searchObjectByPath(data, responsepath.path)
+
+                                                if (!re) return false
+
+                                                response = re
+                                                return true
+                                        })
 
                                         if (!response) return
 

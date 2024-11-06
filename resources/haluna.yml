@@ -8,7 +8,9 @@ TriggerSubscribe:
       entity_id: 'media_player.xiaomi_lx06_571f_play_control'
 
 CallService:
-  - command: '开热水壶'
+  - command: 
+      name: '开热水壶'
+      level: 3 # <- 执行权限(可选)，默认为3(保护你的家具不会被人乱用)
     domain: 'xiaomi_miot'
     service: 'call_action'
     target:
@@ -17,7 +19,9 @@ CallService:
       siid: 2
       aiid: 1
     return_response: false
-  - command: '小爱 <message:text>'
+  - command: 
+      name: '小爱 <message:text>'
+      level: 3
     domain: 'xiaomi_miot'
     service: 'intelligent_speaker'
     target:
@@ -25,8 +29,10 @@ CallService:
     service_data:
       execute: true
       silent: false
-      text: '${input_0}'
+      text: '${input_0}'   # <- ${input_x}会被替换为指令中的传入的参数，按顺序替换，如此处的${input_0}会被替换为传入的第一个参数
     return_response: false # <- 我也不知道是什么玩意，别问
-    responsepath:          # <- responsepath,将下面筛选器截取的值作为指令响应(可选)
-      type: 'event'
-      path: 'event:data:new_state:attributes:answers[0]:llm:text'
+    responsepath:          # <- responsepath,将下面筛选器(支持多个筛选器)截取的值作为指令响应(可选)
+      - type: 'event' 
+        path: 'event:data:new_state:attributes:answers[0]:llm:text' # <- 截取指定返回值的路径，如此处截取了小爱的回答
+      - type: 'event'
+        path: 'event:data:new_state:attributes:answers[0]:tts:text'
