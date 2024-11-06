@@ -1,4 +1,3 @@
-lib
 dist
 external
 
@@ -6,7 +5,6 @@ node_modules
 npm-debug.log
 yarn-debug.log
 yarn-error.log
-tsconfig.tsbuildinfo
 
 .eslintcache
 .DS_Store
