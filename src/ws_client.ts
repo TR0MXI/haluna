@@ -52,18 +52,18 @@ export class HaWsClinet extends Service{
                 
                 try {
                         this.socket = ctx.http.ws(this.path+ '/api/websocket')
+                        this.socket.onopen = this.onOpen
+                        this.socket.onmessage = this.onMessage
+                        this.socket.onerror = this.onError
                 } catch(error) {
-                        ctx.logger(error)
+                        ctx.logger.error(error)
                 }
 
                 if (this.socket) {
-                        this.socket.onopen = this.onOpen
-                        this.socket.onmessage = this.onMessage
+                        ctx.setInterval(() => {
+                                this.Send(HaWsClinet.pingMessage)
+                        }, config.ping * 1000)
                 }
-
-                ctx.setInterval(() => {
-                        this.Send(HaWsClinet.pingMessage)
-                }, config.ping * 1000)
         }
 
         private onOpen = () => {
@@ -114,6 +114,10 @@ export class HaWsClinet extends Service{
                                 this.debuglogger('哼！收到了pong！')
                                 break
                 }
+        }
+
+        private onError = (event: Event) => {
+                this.ctx.logger.error('哎呀！出错了！' + JSON.stringify(event))
         }
 
         private Auth(): void {

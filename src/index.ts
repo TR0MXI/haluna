@@ -28,6 +28,11 @@ export async function apply(ctx: Context, config: Config) {
 
         const HaWs = new HaWsClinet(ctx, config)
 
+        if (!HaWs) {
+                logger.error('haluna初始化失败！')
+                return
+        }
+
         waitForAuth(HaWs).then(() => {
                 configData.EventSubscribe.forEach((item: string) => {
                         HaWs.SubscribeEvents(item)

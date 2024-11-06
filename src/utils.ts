@@ -1,4 +1,4 @@
-import { Context, Fragment } from "koishi"
+import { Context } from "koishi"
 import {} from '@koishijs/plugin-help'
 import { CallServiceYaml } from "./types"
 import { HaWsClinet } from "./ws_client"

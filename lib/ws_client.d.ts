@@ -24,6 +24,7 @@ export declare class HaWsClinet extends Service {
     constructor(ctx: Context, config: Config);
     private onOpen;
     private onMessage;
+    private onError;
     private Auth;
     HaLogger(format: any, ...param: any[]): void;
     IsAuth(): boolean;
