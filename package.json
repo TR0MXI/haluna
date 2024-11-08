@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-haluna",
-  "description": "",
+  "description": "将 Home Assistant 接入 Koishi，通过 Koishi 控制家庭智能家居。",
   "version": "0.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -13,7 +13,8 @@
   "keywords": [
     "chatbot",
     "koishi",
-    "plugin"
+    "plugin",
+    "tool"
   ],
   "service": {
     "implements": ["haluna"]

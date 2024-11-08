@@ -2,12 +2,12 @@
 EventSubscribe:
   - 'state_changed'
 
-TriggerSubscribe:
+TriggerSubscribe: # <- 该功能尚未实现
   - target:
       platform: 'state'
       entity_id: 'media_player.xiaomi_lx06_571f_play_control'
 
-CallService:
+CallService: # <- 在Home Assistant开发者工具(动作)处打开YAML模式获取，需要自己匹配下面示例格式
   - command: 
       name: '开热水壶'
       level: 3 # <- 执行权限(可选)，默认为3(保护你的家具不会被人乱用)
