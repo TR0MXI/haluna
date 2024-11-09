@@ -131,6 +131,8 @@ export function CreateCallServiceCommand(
                                 },
                                 return_response
                         )
+
+                        session.send("正在执行")
                 })
 }
 
